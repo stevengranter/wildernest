@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { PropsWithChildren, useEffect, useState } from "react"
 import { useSearchParams } from "react-router-dom"
 
 import {
@@ -29,7 +29,13 @@ type FormValues = {
   per_page: string
 }
 
-export default function SearchPage() {
+type SearchPageProps = {
+  title?: string
+}
+
+export default function SearchPage({
+  title,
+}: PropsWithChildren<SearchPageProps>) {
   const form = useForm({ mode: "uncontrolled" })
 
   const [searchParams, setSearchParams] = useSearchParams()
@@ -93,7 +99,7 @@ export default function SearchPage() {
 
   return (
     <DefaultPaper>
-      <Title order={1}>Search</Title>
+      <Title order={1}>{title || "Search"}</Title>
       <p>
         Type in your findings here: animal, plant, or fungi. Results are sorted
         by number of observations recorded in the iNaturalist.org iNatDatabase.
