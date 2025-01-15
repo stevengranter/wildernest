@@ -1,12 +1,19 @@
+import SearchForm from "~/features/_shared/components/forms/SearchForm.tsx"
+
 const logo = "./assets/images/logo.png"
 import { Flex, Image } from "@mantine/core"
 
 import SearchPage from "~/features/search/pages/SearchPage.tsx"
+import DefaultPaper from "~/features/_shared/components/DefaultPaper.tsx"
 
 export default function WelcomePage() {
   return (
     <>
       <ResponsiveLogo />
+      <DefaultPaper>
+        <SearchForm />
+      </DefaultPaper>
+
       <SearchPage title="Welcome to WilderNest" />
     </>
   )
