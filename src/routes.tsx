@@ -12,6 +12,7 @@ import WelcomePage from "~/features/home/pages/WelcomePage.tsx"
 import SearchPage from "~/features/search/pages/SearchPage.tsx"
 import UserManagement from "~/features/user-management/components/UserManagement.tsx"
 import DefaultLayout from "~/theme/DefaultLayout.tsx"
+import DevPage from "~/features/dev/DevPage.tsx"
 
 export const router: ReturnType<typeof createBrowserRouter> =
   createBrowserRouter(
@@ -33,6 +34,9 @@ export const router: ReturnType<typeof createBrowserRouter> =
         </Route>
         <Route path="search">
           <Route element={<SearchPage />} index></Route>
+        </Route>
+        <Route path="dev">
+          <Route element={<DevPage />} index></Route>
         </Route>
       </Route>,
     ),

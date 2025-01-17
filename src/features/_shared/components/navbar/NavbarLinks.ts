@@ -1,4 +1,9 @@
-import { IconCards, IconHome, IconUsersGroup } from "@tabler/icons-react"
+import {
+  IconCards,
+  IconCrane,
+  IconHome,
+  IconUsersGroup,
+} from "@tabler/icons-react"
 
 export const publicLinks = [
   { icon: IconHome, label: "Home", to: "/" },
@@ -8,4 +13,5 @@ export const publicLinks = [
 
 export const adminLinks = [
   { icon: IconUsersGroup, label: "Users", to: "/users" },
+  { icon: IconCrane, label: "Dev", to: "/dev" },
 ]
