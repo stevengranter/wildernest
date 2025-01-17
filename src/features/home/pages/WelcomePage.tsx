@@ -5,11 +5,15 @@ import { Flex, Image } from "@mantine/core"
 
 import SearchPage from "~/features/search/pages/SearchPage.tsx"
 import DefaultPaper from "~/features/_shared/components/DefaultPaper.tsx"
+import InputPlaceName from "~/features/_shared/components/input/InputPlaceName.tsx"
 
 export default function WelcomePage() {
   return (
     <>
       <ResponsiveLogo />
+      <DefaultPaper>
+        <InputPlaceName />
+      </DefaultPaper>
       <DefaultPaper>
         <SearchForm />
       </DefaultPaper>
