@@ -7,7 +7,8 @@ import { IconCards, IconHome, IconSearch } from "@tabler/icons-react"
 import { NavbarSimple } from "~/features/_shared/components/navbar/NavbarSimple.tsx"
 
 import styles from "./DefaultLayout.module.css"
-import CollectionsList from "~/features/collections/components/CollectionsList.tsx"
+import CollectionsDropContainer from "~/features/collections/components/CollectionsDropContainer.tsx"
+import { DndContext } from "@dnd-kit/core"
 
 const backgroundImage = "./assets/images/ui/forest-bg-01.png"
 export default function DefaultLayout() {
@@ -35,59 +36,64 @@ export default function DefaultLayout() {
   const isDesktop = useMediaQuery(mediaQuery)
 
   return (
-    <AppShell
-      layout="alt"
-      // header={{ height: rem(270), collapsed: !pinned, offset: true }}
-      // header={{ height: rem(120), collapsed: !pinned, offset: true }}
-      footer={{ height: rem(80), collapsed: isDesktop }}
-      navbar={{
-        width: rem(200),
-        breakpoint: "md",
-        collapsed: { desktop: false, mobile: true },
-      }}
-      aside={{ width: 200, breakpoint: 1 }}
-      p="lg"
-    >
-      <AppShell.Navbar withBorder={false}>
-        <NavbarSimple />
-      </AppShell.Navbar>
-      <AppShell.Main>
-        <Outlet />
-      </AppShell.Main>
-      <AppShell.Aside p="md">
-        <CollectionsList />
-      </AppShell.Aside>
-      <AppShell.Footer withBorder={false}>
-        <Group
-          justify="space-around"
-          align="center"
-          // bg="orange"
-          className={styles.mobile_toolbar}
-          bottom="0"
-          py="sm"
-        >
-          <Link to="/">
-            <ActionIcon variant="transparent" color="white" size={60}>
-              <IconHome className={styles.footer_icon} stroke="2"></IconHome>
-            </ActionIcon>
-          </Link>
+    <DndContext>
+      <AppShell
+        layout="alt"
+        // header={{ height: rem(270), collapsed: !pinned, offset: true }}
+        // header={{ height: rem(120), collapsed: !pinned, offset: true }}
+        footer={{ height: rem(80), collapsed: isDesktop }}
+        navbar={{
+          width: rem(200),
+          breakpoint: "md",
+          collapsed: { desktop: false, mobile: true },
+        }}
+        aside={{ width: 200, breakpoint: 1 }}
+        p="lg"
+      >
+        <AppShell.Navbar withBorder={false}>
+          <NavbarSimple />
+        </AppShell.Navbar>
+        <AppShell.Main>
+          <Outlet />
+        </AppShell.Main>
+        <AppShell.Aside p="md">
+          <CollectionsDropContainer />
+        </AppShell.Aside>
+        <AppShell.Footer withBorder={false}>
+          <Group
+            justify="space-around"
+            align="center"
+            // bg="orange"
+            className={styles.mobile_toolbar}
+            bottom="0"
+            py="sm"
+          >
+            <Link to="/">
+              <ActionIcon variant="transparent" color="white" size={60}>
+                <IconHome className={styles.footer_icon} stroke="2"></IconHome>
+              </ActionIcon>
+            </Link>
 
-          <Link to="/collections">
-            <ActionIcon variant="transparent" color="white" size={60}>
-              <IconCards className={styles.footer_icon} stroke="2"></IconCards>
-            </ActionIcon>
-          </Link>
-          <Link to="/search">
-            <ActionIcon variant="transparent" color="white" size={60}>
-              <IconSearch
-                className={styles.footer_icon}
-                stroke="2"
-              ></IconSearch>
-            </ActionIcon>
-          </Link>
-        </Group>
-        {/*</Paper>*/}
-      </AppShell.Footer>
-    </AppShell>
+            <Link to="/collections">
+              <ActionIcon variant="transparent" color="white" size={60}>
+                <IconCards
+                  className={styles.footer_icon}
+                  stroke="2"
+                ></IconCards>
+              </ActionIcon>
+            </Link>
+            <Link to="/search">
+              <ActionIcon variant="transparent" color="white" size={60}>
+                <IconSearch
+                  className={styles.footer_icon}
+                  stroke="2"
+                ></IconSearch>
+              </ActionIcon>
+            </Link>
+          </Group>
+          {/*</Paper>*/}
+        </AppShell.Footer>
+      </AppShell>
+    </DndContext>
   )
 }

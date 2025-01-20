@@ -41,6 +41,7 @@ import { WilderKindCardType } from "~/models/WilderKindCardType.ts"
 import { Interweave } from "interweave"
 
 import styles from "./WildCard.module.css"
+import { useDraggable } from "@dnd-kit/core"
 
 type WildCardProps = {
   taxonId?: number | string
@@ -56,6 +57,15 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
   const [isFlipped, setIsFlipped] = useState(false)
   // const [wilderNestData, setWilderNestData] =
   //   useState<WilderKindCardType | null>(null)
+
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: `draggable-${cardId}`,
+  })
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }
+    : undefined
 
   useLogger("WildCard", [taxonId, dataObject])
 
@@ -80,33 +90,24 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
   if (!iNatData) return null
 
   return (
-    // <GridCol
-    //   span={{
-    //     base: 12,
-    //     xs: 12,
-    //     sm: 6,
-    //     md: 6,
-    //     lg: 4,
-    //     xl: 3,
-    //     xxl: 2,
-    //   }}
-    // >
-    <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-      <WildCard_Front
-        iNatdata={iNatData}
-        isLoading={iNatQuery.isLoading}
-        // wilderNestData={wilderNestData}
-        onFlip={(e: React.MouseEvent) => handleFlip(e)}
-        {...restProps}
-      />
-      <WildCard_Back
-        iNatdata={iNatData}
-        isLoading={iNatQuery.isLoading}
-        onFlip={(e: React.MouseEvent) => handleFlip(e)}
-        {...restProps}
-      />
-    </ReactCardFlip>
-    // </GridCol>
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+      <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+        <WildCard_Front
+          iNatdata={iNatData}
+          isLoading={iNatQuery.isLoading}
+          // wilderNestData={wilderNestData}
+          onFlip={(e: React.MouseEvent) => handleFlip(e)}
+          {...restProps}
+        />
+
+        <WildCard_Back
+          iNatdata={iNatData}
+          isLoading={iNatQuery.isLoading}
+          onFlip={(e: React.MouseEvent) => handleFlip(e)}
+          {...restProps}
+        />
+      </ReactCardFlip>
+    </div>
   )
 }
 

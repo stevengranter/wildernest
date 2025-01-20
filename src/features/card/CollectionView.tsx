@@ -29,7 +29,7 @@ export default function CollectionView() {
 
   let itemIdsArray = [] as string[]
 
-  function transform(
+  function transformText(
     node: HTMLElement,
     children: React.ReactNode,
   ): React.ReactNode {
@@ -78,7 +78,7 @@ export default function CollectionView() {
         <>
           <Text m="xs">
             <Interweave
-              transform={transform}
+              transform={transformText}
               content={selectedCollection.description}
             />
           </Text>

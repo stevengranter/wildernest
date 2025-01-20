@@ -21,7 +21,6 @@ export default function NestView() {
   // Initialize collectionActions for collection management functions
   const collectionAction = useCollectionActions()
 
-  //
   const [dropdownDataArray, setDropdownDataArray] = useState<
     { value: string; label: string }[]
   >([])
