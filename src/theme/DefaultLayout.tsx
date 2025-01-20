@@ -7,6 +7,7 @@ import { IconCards, IconHome, IconSearch } from "@tabler/icons-react"
 import { NavbarSimple } from "~/features/_shared/components/navbar/NavbarSimple.tsx"
 
 import styles from "./DefaultLayout.module.css"
+import CollectionsList from "~/features/collections/components/CollectionsList.tsx"
 
 const backgroundImage = "./assets/images/ui/forest-bg-01.png"
 export default function DefaultLayout() {
@@ -44,6 +45,7 @@ export default function DefaultLayout() {
         breakpoint: "md",
         collapsed: { desktop: false, mobile: true },
       }}
+      aside={{ width: 200, breakpoint: 1 }}
       p="lg"
     >
       <AppShell.Navbar withBorder={false}>
@@ -52,6 +54,9 @@ export default function DefaultLayout() {
       <AppShell.Main>
         <Outlet />
       </AppShell.Main>
+      <AppShell.Aside p="md">
+        <CollectionsList />
+      </AppShell.Aside>
       <AppShell.Footer withBorder={false}>
         <Group
           justify="space-around"
