@@ -65,10 +65,10 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
   const style = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-        scale: `0.75`,
+        scale: `0.6`,
         rotate: `-10deg`,
         transition: `scale 250ms, rotate 100ms`,
-        zIndex: "+1",
+        zIndex: "+1000",
       }
     : undefined
 
@@ -120,24 +120,25 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
 
 function WildCard_Front({
   iNatdata,
-  isLoading,
+  // isLoading,
   onFlip,
   // wilderNestData,
   ...restProps
 }: {
   iNatdata: iNatTaxonRecord | null
-  isLoading: boolean
+  // isLoading: boolean
+  // eslint-disable-next-line no-unused-vars
   onFlip?: (e: React.MouseEvent) => void
   wilderNestData?: WilderKindCardType | null
 }) {
-  const theme = useMantineTheme()
+  // const theme = useMantineTheme()
   if (!iNatdata) return null
   // console.log(iNatdata)
 
   return (
     <Card
       key={iNatdata.id}
-      withBorder
+      // withBorder
       radius={"lg"}
       shadow="md"
       className={styles.wildcard}
@@ -185,6 +186,7 @@ function WildCard_Back({
 }: {
   iNatdata: iNatTaxonRecord | null
   isLoading: boolean
+  // eslint-disable-next-line no-unused-vars
   onFlip?: (e: React.MouseEvent) => void
   _wilderNestData?: WilderKindCardType | null
 }) {
@@ -194,7 +196,7 @@ function WildCard_Back({
   return (
     <Card
       key={iNatdata.id}
-      withBorder
+      // withBorder
       radius={"lg"}
       className={styles.wildcard}
       {...restProps}
@@ -247,7 +249,7 @@ function WildCard_Back({
                       />
                       <Text
                         size="md"
-                        color="white"
+                        c="white"
                         style={{ textShadow: "0px 0px 3px #000" }}
                         fw={700}
                       >
@@ -263,7 +265,7 @@ function WildCard_Back({
                         fs="italic"
                         lineClamp={2}
                         mt="xs"
-                        color="white"
+                        c="white"
                       >
                         Source:{" "}
                         <Anchor href={iNatdata.wikipedia_url}>
