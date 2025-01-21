@@ -41,7 +41,7 @@ import { WilderKindCardType } from "~/models/WilderKindCardType.ts"
 import { Interweave } from "interweave"
 
 import styles from "./WildCard.module.css"
-import { DragOverlay, useDraggable } from "@dnd-kit/core"
+import { useDraggable } from "@dnd-kit/core"
 
 type WildCardProps = {
   taxonId?: number | string
@@ -55,6 +55,7 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
   const [cardId, setCardId] = useState(taxonId)
   const [iNatData, setINatData] = useState(dataObject)
   const [isFlipped, setIsFlipped] = useState(false)
+
   // const [wilderNestData, setWilderNestData] =
   //   useState<WilderKindCardType | null>(null)
 
@@ -231,7 +232,7 @@ function WildCard_Back({
                     <Text
                       size="xs"
                       lineClamp={8}
-                      color="white"
+                      c="white"
                       style={{ textShadow: "0px 0px 3px #000" }}
                     >
                       <Interweave content={iNatdata.wikipedia_summary} />

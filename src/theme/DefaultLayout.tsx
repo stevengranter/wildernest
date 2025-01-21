@@ -8,7 +8,13 @@ import { NavbarSimple } from "~/features/_shared/components/navbar/NavbarSimple.
 
 import styles from "./DefaultLayout.module.css"
 import CollectionsDropContainer from "~/features/collections/components/CollectionsDropContainer.tsx"
-import { DndContext, DragOverlay } from "@dnd-kit/core"
+import {
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
 
 const backgroundImage = "./assets/images/ui/forest-bg-01.png"
 export default function DefaultLayout() {
@@ -35,8 +41,25 @@ export default function DefaultLayout() {
 
   const isDesktop = useMediaQuery(mediaQuery)
 
+  const mouseSensor = useSensor(MouseSensor, {
+    // Require the mouse to move by 10 pixels before activating
+    activationConstraint: {
+      distance: 10,
+    },
+  })
+
+  const touchSensor = useSensor(TouchSensor, {
+    // Press delay of 250ms, with tolerance of 5px of movement
+    activationConstraint: {
+      delay: 250,
+      tolerance: 5,
+    },
+  })
+
+  const sensors = useSensors(mouseSensor, touchSensor)
+
   return (
-    <DndContext>
+    <DndContext sensors={sensors}>
       <AppShell
         layout="alt"
         // header={{ height: rem(270), collapsed: !pinned, offset: true }}
