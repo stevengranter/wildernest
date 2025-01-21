@@ -8,7 +8,7 @@ import { NavbarSimple } from "~/features/_shared/components/navbar/NavbarSimple.
 
 import styles from "./DefaultLayout.module.css"
 import CollectionsDropContainer from "~/features/collections/components/CollectionsDropContainer.tsx"
-import { DndContext } from "@dnd-kit/core"
+import { DndContext, DragOverlay } from "@dnd-kit/core"
 
 const backgroundImage = "./assets/images/ui/forest-bg-01.png"
 export default function DefaultLayout() {

@@ -147,7 +147,7 @@ export default function SearchPage({
                   }}
                   key={result.id}
                 >
-                  <WildCard dataObject={result} />
+                  <WildCard dataObject={result} taxonId={result.id} />
                 </GridCol>
               )
             })}
