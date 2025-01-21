@@ -12,6 +12,7 @@ import { WildCard } from "~/features/card/components/WildCard/WildCard.tsx"
 import { Interweave } from "interweave"
 
 import "./CollectionView.css"
+import { useDndMonitor } from "@dnd-kit/core"
 
 export default function CollectionView() {
   const [collections] = useCollections()
@@ -59,6 +60,16 @@ export default function CollectionView() {
     collectionAction.deleteCollection(selectedCollectionId)
     setSelectedCollectionId(null)
   }
+
+  useDndMonitor({
+    onDragStart(event) {
+      console.log("CollectionView : onDragStart: id: ", event.active.id)
+    },
+    // onDragMove(event) {},
+    // onDragOver(event) {},
+    // onDragEnd(event) {},
+    // onDragCancel(event) {},
+  })
 
   return (
     <>

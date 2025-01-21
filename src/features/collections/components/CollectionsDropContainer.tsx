@@ -3,9 +3,24 @@ import { useCollections } from "~/features/_shared/hooks/useCollections.ts"
 import { useLogger } from "~/dev.ts"
 
 import Droppable from "~/features/card/components/DndKit/Droppable.tsx"
+import { useDndMonitor } from "@dnd-kit/core"
 
 export default function CollectionsDropContainer() {
-  const [collections, updateCollections] = useCollections()
+  const [collections] = useCollections()
+  useDndMonitor({
+    // onDragStart(event) {
+    //   console.log("CollectionView : onDragStart: id: ", event.active.id)
+    // },
+    // onDragMove(event) {},
+    // onDragOver(event) {},
+    onDragOver(event) {
+      console.log(
+        "CollectionsDropContainer : onDragOver: id: ",
+        event.active.id,
+      )
+    },
+    // onDragCancel(event) {},
+  })
   useLogger("CollectionsList", [{ collections }])
   return (
     collections && (
