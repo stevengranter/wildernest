@@ -41,7 +41,7 @@ import { WilderKindCardType } from "~/models/WilderKindCardType.ts"
 import { Interweave } from "interweave"
 
 import styles from "./WildCard.module.css"
-import { useDraggable } from "@dnd-kit/core"
+import Draggable from "~/features/card/components/DndKit/Draggable.tsx"
 
 type WildCardProps = {
   taxonId?: number | string
@@ -59,18 +59,18 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
   // const [wilderNestData, setWilderNestData] =
   //   useState<WilderKindCardType | null>(null)
 
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: `draggable-${taxonId}`,
-  })
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-        scale: `0.6`,
-        rotate: `-10deg`,
-        transition: `scale 250ms, rotate 100ms`,
-        zIndex: "+1000",
-      }
-    : undefined
+  // const { attributes, listeners, setNodeRef, transform } = useDraggable({
+  //   id: `draggable-${taxonId}`,
+  // })
+  // const style = transform
+  //   ? {
+  //       transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+  //       scale: `0.6`,
+  //       rotate: `-10deg`,
+  //       transition: `scale 250ms, rotate 100ms`,
+  //       zIndex: "+1000",
+  //     }
+  //   : undefined
 
   useLogger("WildCard", [taxonId, dataObject])
 
@@ -94,13 +94,20 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
 
   if (!iNatData) return null
 
+  const dragStyles = {
+    scale: `0.6`,
+    rotate: `-10deg`,
+    transition: `scale 250ms, rotate 100ms`,
+  }
+
   return (
     <>
-      <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+      {/*<div ref={setNodeRef} style={style} {...listeners} {...attributes}>*/}
+      <Draggable id={taxonId?.toString()} style={dragStyles}>
         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
           <WildCard_Front
             iNatdata={iNatData}
-            isLoading={iNatQuery.isLoading}
+            // isLoading={iNatQuery.isLoading}
             // wilderNestData={wilderNestData}
             onFlip={(e: React.MouseEvent) => handleFlip(e)}
             {...restProps}
@@ -113,7 +120,8 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
             {...restProps}
           />
         </ReactCardFlip>
-      </div>
+      </Draggable>
+      {/*</div>*/}
     </>
   )
 }

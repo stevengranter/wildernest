@@ -10,6 +10,7 @@ import styles from "./DefaultLayout.module.css"
 import CollectionsDropContainer from "~/features/collections/components/CollectionsDropContainer.tsx"
 import {
   DndContext,
+  DragEndEvent,
   MouseSensor,
   TouchSensor,
   useSensor,
@@ -58,8 +59,14 @@ export default function DefaultLayout() {
 
   const sensors = useSensors(mouseSensor, touchSensor)
 
+  function handleDragEnd(event: DragEndEvent) {
+    if (event.over) {
+      console.log("over", event.over)
+    }
+  }
+
   return (
-    <DndContext sensors={sensors}>
+    <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
       <AppShell
         layout="alt"
         // header={{ height: rem(270), collapsed: !pinned, offset: true }}
