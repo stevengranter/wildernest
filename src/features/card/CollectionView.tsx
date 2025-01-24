@@ -30,15 +30,6 @@ export default function CollectionView() {
 
   let itemIdsArray = [] as string[]
 
-  function transformText(
-    node: HTMLElement,
-    children: React.ReactNode,
-  ): React.ReactNode {
-    if (node.tagName === "A") {
-      return <Link to={node.getAttribute("href") || ""}>{children}</Link>
-    }
-  }
-
   const selectedCollection = collections.find(
     (collection) => collection.id === selectedCollectionId,
   )
@@ -128,4 +119,13 @@ export default function CollectionView() {
       )}
     </>
   )
+}
+
+function transformText(
+  node: HTMLElement,
+  children: React.ReactNode,
+): React.ReactNode {
+  if (node.tagName === "A") {
+    return <Link to={node.getAttribute("href") || ""}>{children}</Link>
+  }
 }

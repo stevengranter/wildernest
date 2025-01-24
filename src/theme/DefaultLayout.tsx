@@ -10,11 +10,13 @@ import styles from "./DefaultLayout.module.css"
 import CollectionsDropContainer from "~/features/collections/components/CollectionsDropContainer.tsx"
 import {
   DndContext,
+  DragEndEvent,
   MouseSensor,
   TouchSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core"
+import useCollectionActions from "~/features/_shared/hooks/useCollectionActions.tsx"
 
 const backgroundImage = "./assets/images/ui/forest-bg-01.png"
 export default function DefaultLayout() {
@@ -41,6 +43,8 @@ export default function DefaultLayout() {
 
   const isDesktop = useMediaQuery(mediaQuery)
 
+  const collectionAction = useCollectionActions()
+
   const mouseSensor = useSensor(MouseSensor, {
     // Require the mouse to move by 10 pixels before activating
     activationConstraint: {
@@ -58,17 +62,16 @@ export default function DefaultLayout() {
 
   const sensors = useSensors(mouseSensor, touchSensor)
 
-  // function handleDragEnd(event: DragEndEvent) {
-  //   if (event.over) {
-  //     console.log("over", event.over)
-  //   }
-  // }
+  function handleDragEnd(event: DragEndEvent) {
+    if (event.over) {
+      console.log("Over:", event.over.id)
+      console.log("Card ID:", event.active.id)
+      collectionAction.addIdToCollectionId(event.active.id, event.over.id)
+    }
+  }
 
   return (
-    <DndContext
-      sensors={sensors}
-      // onDragEnd={handleDragEnd}
-    >
+    <DndContext sensors={sensors} onDragEnd={(e) => handleDragEnd(e)}>
       <AppShell
         layout="alt"
         // header={{ height: rem(270), collapsed: !pinned, offset: true }}

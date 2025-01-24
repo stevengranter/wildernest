@@ -14,6 +14,7 @@ import {
   Group,
   Image,
   Loader,
+  Modal,
   Overlay,
   Stack,
   Text,
@@ -25,6 +26,7 @@ import {
   IconArrowForwardUp,
   IconHeart,
   IconHeartFilled,
+  IconMaximize,
   IconStar,
   IconStarFilled,
 } from "@tabler/icons-react"
@@ -42,6 +44,7 @@ import { Interweave } from "interweave"
 
 import styles from "./WildCard.module.css"
 import Draggable from "~/features/card/components/DndKit/Draggable.tsx"
+import { useDisclosure } from "@mantine/hooks"
 
 type WildCardProps = {
   taxonId?: number | string
@@ -55,22 +58,7 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
   const [cardId, setCardId] = useState(taxonId)
   const [iNatData, setINatData] = useState(dataObject)
   const [isFlipped, setIsFlipped] = useState(false)
-
-  // const [wilderNestData, setWilderNestData] =
-  //   useState<WilderKindCardType | null>(null)
-
-  // const { attributes, listeners, setNodeRef, transform } = useDraggable({
-  //   id: `draggable-${taxonId}`,
-  // })
-  // const style = transform
-  //   ? {
-  //       transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  //       scale: `0.6`,
-  //       rotate: `-10deg`,
-  //       transition: `scale 250ms, rotate 100ms`,
-  //       zIndex: "+1000",
-  //     }
-  //   : undefined
+  const [opened, { open, close }] = useDisclosure(false)
 
   useLogger("WildCard", [taxonId, dataObject])
 
@@ -92,6 +80,10 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
     setIsFlipped((prevState) => !prevState)
   }
 
+  function handleZoom() {
+    open()
+  }
+
   if (!iNatData) return null
 
   const dragStyles = {
@@ -102,6 +94,33 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
 
   return (
     <>
+      <Modal
+        opened={opened}
+        onClose={close}
+        centered
+        withCloseButton={false}
+        size="md"
+        // fullScreen
+        bg="black"
+      >
+        <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+          <WildCard_Front
+            iNatdata={iNatData}
+            // isLoading={iNatQuery.isLoading}
+            // wilderNestData={wilderNestData}
+            onFlip={(e: React.MouseEvent) => handleFlip(e)}
+            onZoom={handleZoom}
+            {...restProps}
+          />
+
+          <WildCard_Back
+            iNatdata={iNatData}
+            isLoading={iNatQuery.isLoading}
+            onFlip={(e: React.MouseEvent) => handleFlip(e)}
+            {...restProps}
+          />
+        </ReactCardFlip>
+      </Modal>
       {/*<div ref={setNodeRef} style={style} {...listeners} {...attributes}>*/}
       <Draggable id={taxonId?.toString()} style={dragStyles}>
         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
@@ -110,6 +129,7 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
             // isLoading={iNatQuery.isLoading}
             // wilderNestData={wilderNestData}
             onFlip={(e: React.MouseEvent) => handleFlip(e)}
+            onZoom={handleZoom}
             {...restProps}
           />
 
@@ -129,6 +149,7 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
 function WildCard_Front({
   iNatdata,
   // isLoading,
+  onZoom,
   onFlip,
   // wilderNestData,
   ...restProps
@@ -137,6 +158,7 @@ function WildCard_Front({
   // isLoading: boolean
   // eslint-disable-next-line no-unused-vars
   onFlip?: (e: React.MouseEvent) => void
+  onZoom?: () => void
   wilderNestData?: WilderKindCardType | null
 }) {
   // const theme = useMantineTheme()
@@ -163,19 +185,35 @@ function WildCard_Front({
                 : "assets/images/ui/no-photo-beaver-01.jpg"
             }
           >
-            <Group justify="flex-end">
-              <Tooltip label="Flip card">
-                <ActionIcon
-                  radius="xl"
-                  size="lg"
-                  onClick={onFlip}
-                  m="xs"
-                  aria-label="Flip card"
-                  // opacity="75%"
-                >
-                  <IconArrowForwardUp />
-                </ActionIcon>
-              </Tooltip>
+            <Group justify="space-between">
+              <Group justify="flex-start">
+                {" "}
+                <Tooltip label="Zoom card">
+                  <ActionIcon
+                    radius="xl"
+                    size="lg"
+                    onClick={onZoom}
+                    m="xs"
+                    aria-label="Zoom"
+                  >
+                    <IconMaximize />
+                  </ActionIcon>
+                </Tooltip>
+              </Group>
+              <Group justify="flex-end">
+                <Tooltip label="Flip card">
+                  <ActionIcon
+                    radius="xl"
+                    size="lg"
+                    onClick={onFlip}
+                    m="xs"
+                    aria-label="Flip card"
+                    // opacity="75%"
+                  >
+                    <IconArrowForwardUp />
+                  </ActionIcon>
+                </Tooltip>
+              </Group>
             </Group>
           </BackgroundImage>
         </AspectRatio>
@@ -190,12 +228,14 @@ function WildCard_Back({
   iNatdata,
   isLoading,
   onFlip,
+  onZoom,
   ...restProps
 }: {
   iNatdata: iNatTaxonRecord | null
   isLoading: boolean
   // eslint-disable-next-line no-unused-vars
   onFlip?: (e: React.MouseEvent) => void
+  onZoom?: () => void
   _wilderNestData?: WilderKindCardType | null
 }) {
   // const theme = useMantineTheme()

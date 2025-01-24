@@ -15,6 +15,7 @@ import {
 import useNestActions from "~/features/_shared/hooks/useNestActions.ts"
 import toTitleCase from "~/features/_shared/utils/toTitleCase.ts"
 import _ from "lodash"
+import { UniqueIdentifier } from "@dnd-kit/core"
 
 const notificationsQueueId = "message-queue"
 
@@ -36,6 +37,10 @@ export default function useCollectionActions() {
   // ---- Collection Management ----
   function hasCollection(name: string): boolean {
     return state.some((collection) => collection.name === name)
+  }
+
+  function hasCollectionId(id: string | UniqueIdentifier): boolean {
+    return state.some((collection) => collection.id === id)
   }
 
   function createCollection(collectionName: string): void {
@@ -79,7 +84,81 @@ export default function useCollectionActions() {
     })
   }
 
-  function addIdToCollection(
+  function addIdToCollectionId(
+    taxonId: number | string,
+    collectionId: string | UniqueIdentifier,
+    taxonName?: string,
+    taxonCommonName?: string,
+  ): void {
+    initNotifications()
+    if (!nestAction.isValidId(taxonId)) {
+      notifications.update({
+        id: notificationsQueueId,
+        message: `Cannot add id: ${taxonId}, not a valid id`,
+      })
+      return
+    }
+
+    if (!nestAction.isItemInNest(taxonId)) {
+      // Add item to the Nest
+      nestAction.addItemToNest(taxonId.toString())
+    }
+
+    if (!hasCollectionId(collectionId)) {
+      notifications.update({
+        id: notificationsQueueId,
+        message: `Collection: ${collectionId} does not exist.`,
+        color: "orange",
+      })
+      // createCollection(collectionId)
+    }
+
+    update((draft) => {
+      const reqCollection = draft.find(
+        (collection) => collection.id === collectionId,
+      )
+
+      if (reqCollection) {
+        if (reqCollection.items.includes(taxonId.toString())) {
+          notifications.update({
+            id: notificationsQueueId,
+            message: `Cannot add, Collection ${collectionId} already includes id: ${taxonId}`,
+            color: "orange",
+          })
+          return
+        }
+
+        reqCollection.items.push(taxonId.toString())
+        console.log({ taxonId })
+        console.log({ taxonName })
+
+        const iconConfig = {
+          icon: <IconPlus />,
+          color: theme.primaryColor,
+        }
+        if (reqCollection.name === "Favorites") {
+          iconConfig.icon = <IconHeartFilled color="red" />
+          iconConfig.color = "white"
+        } else if (reqCollection.name === "Wishlist") {
+          iconConfig.icon = <IconStarFilled color="gold" />
+          iconConfig.color = "white"
+        } else {
+          // iconPlus = <IconPlus />
+        }
+
+        notifications.update({
+          id: notificationsQueueId,
+          message: ``, //(${taxonName}, id: ${taxonId}) added
+          // tto ${reqCollection.collectionId}`,
+          title: `${taxonCommonName && toTitleCase(taxonCommonName)} added to ${reqCollection.name}`,
+
+          ...iconConfig,
+        })
+      }
+    })
+  }
+
+  function addIdToCollectionName(
     taxonId: number | string,
     name: string,
     taxonName?: string,
@@ -271,7 +350,8 @@ export default function useCollectionActions() {
     getCollectionIdByName,
     deleteCollection,
     getAllCollectionNames,
-    addIdToCollection,
+    addIdToCollection: addIdToCollectionName,
+    addIdToCollectionId,
     removeIdFromCollection,
     isItemInCollection,
   }

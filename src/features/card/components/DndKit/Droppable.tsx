@@ -2,10 +2,10 @@ import { useDroppable } from "@dnd-kit/core"
 import { ReactNode } from "react"
 
 export default function Droppable({
-  id = crypto.randomUUID(),
+  id,
   children,
 }: {
-  id?: string
+  id: string
   children: ReactNode
 }) {
   const { isOver, setNodeRef } = useDroppable({
