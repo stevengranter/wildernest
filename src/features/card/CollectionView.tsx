@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
 
 import { Button, Select, SimpleGrid, Text } from "@mantine/core"
@@ -14,13 +14,18 @@ import { Interweave } from "interweave"
 import "./CollectionView.css"
 import { useDndMonitor } from "@dnd-kit/core"
 
-export default function CollectionView() {
+export default function CollectionView(collectionId?: string) {
   const [collections] = useCollections()
   const collectionAction = useCollectionActions()
+  const [searchParams] = useSearchParams()
 
-  // const [selectedCollectionId, setSelectedCollectionId] = useState<
-  //   string | null
-  // >("")
+  useEffect(() => {
+    if (collectionId) return
+    const searchParamsId = searchParams.get("id")
+    console.log("searchParamsId: ", searchParamsId)
+    console.log(searchParams)
+    setSelectedCollectionId(searchParamsId)
+  }, [])
 
   const [selectedCollectionId, setSelectedCollectionId] =
     useLocalSyncedImmerState(
