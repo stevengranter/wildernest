@@ -33,6 +33,13 @@ export default function CollectionView(collectionId?: string) {
       "selectedCollectionId",
     )
 
+  // function handleSelect(collectionId: string | null | undefined) {
+  //   if (!collectionId) {
+  //     setSelectedCollectionId("10a63e56-fdab-4ca9-9af9-ca88c9e5aff3")
+  //   }
+  //   collectionId && setSelectedCollectionId(collectionId)
+  // }
+
   let itemIdsArray = [] as string[]
 
   const selectedCollection = collections.find(

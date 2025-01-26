@@ -39,7 +39,9 @@ export default function useCollectionActions() {
     return state.some((collection) => collection.name === name)
   }
 
-  function hasCollectionId(id: string | UniqueIdentifier): boolean {
+  function hasCollectionId(
+    id: string | UniqueIdentifier | undefined | null,
+  ): boolean {
     return state.some((collection) => collection.id === id)
   }
 
@@ -346,6 +348,7 @@ export default function useCollectionActions() {
 
   return {
     createCollection,
+    hasCollectionId,
     getCollectionNamesIncludingId,
     getCollectionIdByName,
     deleteCollection,

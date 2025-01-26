@@ -7,19 +7,19 @@ import {
 
 import { WildCard } from "~/features/card/components/WildCard/WildCard.tsx"
 import CardsPage from "~/features/card/pages/CardsPage.tsx"
-import CollectionsPage from "~/features/collections/pages/CollectionsPage.tsx"
 import WelcomePage from "~/features/home/pages/WelcomePage.tsx"
 import SearchPage from "~/features/search/pages/SearchPage.tsx"
 import UserManagement from "~/features/user-management/components/UserManagement.tsx"
 import DefaultLayout from "~/theme/DefaultLayout.tsx"
 import DevPage from "~/features/dev/DevPage.tsx"
+import NestView2 from "./features/card/NestView2"
 
 export const router: ReturnType<typeof createBrowserRouter> =
   createBrowserRouter(
     createRoutesFromElements(
       <Route element={<DefaultLayout />} path="/">
         <Route element={<WelcomePage />} index></Route>
-        <Route element={<CollectionsPage />} path="collections"></Route>
+        <Route element={<NestView2 />} path="collections"></Route>
         /* /users */
         <Route path="users">
           <Route element={<UserManagement />} index></Route>
