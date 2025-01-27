@@ -16,6 +16,7 @@ import useNestActions from "~/features/_shared/hooks/useNestActions.ts"
 import toTitleCase from "~/features/_shared/utils/toTitleCase.ts"
 import _ from "lodash"
 import { UniqueIdentifier } from "@dnd-kit/core"
+import { nanoid } from "nanoid"
 
 const notificationsQueueId = "message-queue"
 
@@ -66,7 +67,7 @@ export default function useCollectionActions() {
         update((draft) => {
           draft.push({
             name: collectionName,
-            id: crypto.randomUUID(),
+            id: nanoid(),
             items: [],
           })
           notifications.update({
