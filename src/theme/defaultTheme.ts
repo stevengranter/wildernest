@@ -19,7 +19,8 @@ declare module "@mantine/core" {
 
 export const defaultTheme = createTheme({
   breakpoints: {
-    xs: "30em",
+    xxs: "20em",
+    xs: "40em",
     sm: "48em",
     md: "64em",
     lg: "74em",

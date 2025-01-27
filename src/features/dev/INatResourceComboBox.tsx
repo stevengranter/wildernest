@@ -1,9 +1,9 @@
-import { Combobox, Input, InputBase, useCombobox } from "@mantine/core"
+import { Combobox, TextInput, useCombobox } from "@mantine/core"
 import { useState } from "react"
 
 const resources = ["search", "taxa", "observations", "places"]
 
-export default function INatResourceComboBox() {
+export default function INatResourceComboBox({ name }: { name: string }) {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
   })
@@ -25,16 +25,24 @@ export default function INatResourceComboBox() {
       }}
     >
       <Combobox.Target>
-        <InputBase
-          component="button"
-          type="button"
-          pointer
-          rightSection={<Combobox.Chevron />}
-          rightSectionPointerEvents="none"
+        <TextInput
+          component="input"
+          name={name}
           onClick={() => combobox.toggleDropdown()}
-        >
-          {value || <Input.Placeholder>Pick value</Input.Placeholder>}
-        </InputBase>
+          value={value || ""}
+        />
+        {/*{value || <Input.Placeholder>Pick value</Input.Placeholder>}*!/*/}
+
+        {/*<InputBase*/}
+        {/*  component="button"*/}
+        {/*  type="button"*/}
+        {/*  pointer*/}
+        {/*  rightSection={<Combobox.Chevron />}*/}
+        {/*  rightSectionPointerEvents="none"*/}
+        {/*  onClick={() => combobox.toggleDropdown()}*/}
+        {/*>*/}
+        {/*  {value || <Input.Placeholder>Pick value</Input.Placeholder>}*/}
+        {/*</InputBase>*/}
       </Combobox.Target>
 
       <Combobox.Dropdown>

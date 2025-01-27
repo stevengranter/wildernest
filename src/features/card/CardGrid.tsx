@@ -13,7 +13,7 @@ export default function CardGrid({
   return (
     <>
       <SimpleGrid
-        cols={{ base: 1, xs: 1, sm: 2, md: 2, lg: 3, xl: 4, xxl: 4 }}
+        cols={{ base: 1, xxs: 1, xs: 2, sm: 2, md: 2, lg: 3, xl: 4, xxl: 6 }}
         spacing={{ base: "lg" }}
         verticalSpacing={{ base: "lg" }}
         mt={"md"}

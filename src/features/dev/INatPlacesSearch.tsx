@@ -8,7 +8,7 @@ type ApiResponse = {
   results?: Array<{ uuid: string; name: string }>
 }
 
-export default function INatPlacesSearch() {
+export default function INatPlacesSearch({ name }: { name: string }) {
   const [value, setValue] = useState("")
   const [debouncedValue] = useDebouncedValue(value, 500)
 
@@ -38,6 +38,7 @@ export default function INatPlacesSearch() {
             })
           : []
       }
+      name={name}
     ></Autocomplete>
   )
 }
