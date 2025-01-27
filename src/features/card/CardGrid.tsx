@@ -1,7 +1,7 @@
 import { SimpleGrid } from "@mantine/core"
 import { CSSTransition, TransitionGroup } from "react-transition-group"
 import { WildCard } from "~/features/card/components/WildCard/WildCard.tsx"
-import React from "react"
+import React, { useRef } from "react"
 
 export default function CardGrid({
   cards = [],
@@ -9,7 +9,7 @@ export default function CardGrid({
   cards: string[]
   collectionId?: string
 }) {
-  // const nodeRef = useRef(null)
+  const nodeRef = useRef(null)
   return (
     <>
       <SimpleGrid
@@ -18,8 +18,9 @@ export default function CardGrid({
         verticalSpacing={{ base: "lg" }}
         mt={"md"}
         className="transition-grid"
+        // key={nanoid()}
       >
-        <TransitionGroup>
+        <TransitionGroup component={null} nodeRef={nodeRef}>
           {cards.length > 0 &&
             cards?.map((taxon_id) => {
               // const itemKey = `${taxon_id}-${selectedCollectionId}-${Date.now()}`
@@ -28,8 +29,8 @@ export default function CardGrid({
                   key={taxon_id}
                   classNames="card"
                   timeout={500}
-                  // nodeRef={nodeRef}
-                  // unmountOnExit
+                  nodeRef={nodeRef}
+                  unmountOnExit
                 >
                   <WildCard taxonId={taxon_id} />
                 </CSSTransition>
