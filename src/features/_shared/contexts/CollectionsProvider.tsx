@@ -1,5 +1,5 @@
 // CollectionsContext.tsx
-import React, { ReactElement, ReactNode } from "react"
+import React, { Provider, ReactElement, ReactNode } from "react"
 
 import { useLogger } from "~/dev.ts"
 import {
@@ -24,7 +24,7 @@ export default function CollectionsProvider({
   children,
 }: {
   children: ReactNode
-}): ReactElement {
+}): ReactElement<Provider<unknown>> {
   const [state, updater] = useStorageSyncedImmerState(
     initialCollections,
     "collectionsData",
@@ -38,5 +38,5 @@ export default function CollectionsProvider({
     >
       {children}
     </CollectionsContext.Provider>
-  )) as ReactElement
+  )) as ReactElement<never>
 }

@@ -28,7 +28,6 @@ export default function DefaultLayout() {
     document.body.style.backgroundRepeat = "no-repeat"
     document.body.style.backgroundPosition = "top"
     document.body.style.backgroundAttachment = "fixed"
-    document.body.style.background
     document.body.style.backgroundColor = "#56CADA"
     console.log({ styles })
 

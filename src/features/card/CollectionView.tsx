@@ -14,7 +14,11 @@ import { Interweave } from "interweave"
 import "./CollectionView.css"
 import { useDndMonitor } from "@dnd-kit/core"
 
-export default function CollectionView(collectionId?: string) {
+export default function CollectionView({
+  collectionId,
+}: {
+  collectionId?: string
+}) {
   const [collections] = useCollections()
   const collectionAction = useCollectionActions()
   const [searchParams] = useSearchParams()

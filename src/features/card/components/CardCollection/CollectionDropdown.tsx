@@ -85,7 +85,7 @@ export function CollectionDropdown({
           ? current.filter((v) => v !== val)
           : [...current, val],
       )
-      !collectionAction.isItemInCollection(taxonId, val)
+      return !collectionAction.isItemInCollection(taxonId, val)
         ? collectionAction.addIdToCollection(
             taxonId,
             val,

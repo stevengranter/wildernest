@@ -29,7 +29,7 @@ export function CollectionsSelectDropdown({
       // onChange={handleSelect}
       onChange={(_value, option) => {
         setValue(option)
-        option && handleSelect ? handleSelect(option.value) : null
+        return handleSelect && option ? handleSelect(option.value) : null
       }}
       mb="xs"
       radius="lg"

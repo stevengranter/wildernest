@@ -61,7 +61,9 @@ export default function NestView() {
       return // setDropdownDataArray([{ value: "2", label: "group" }])
     } else {
       const formattedData = formatDropdownData(collectionsState)
-      formattedData && setDropdownDataArray(formattedData)
+      if (formattedData) {
+        setDropdownDataArray(formattedData)
+      }
     }
     if (selectedCollectionId) {
       if (
