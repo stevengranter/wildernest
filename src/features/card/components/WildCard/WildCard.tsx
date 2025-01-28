@@ -40,7 +40,7 @@ import {
   iNatTaxonRecord,
 } from "~/models/iNatTaxaResponseType.ts"
 import { WilderKindCardType } from "~/models/WilderKindCardType.ts"
-import { Interweave } from "interweave"
+import DOMPurify from "dompurify"
 
 import styles from "./WildCard.module.css"
 import Draggable from "~/features/card/components/DndKit/Draggable.tsx"
@@ -228,14 +228,14 @@ function WildCard_Back({
   iNatdata,
   isLoading,
   onFlip,
-  onZoom,
+  // onZoom,
   ...restProps
 }: {
   iNatdata: iNatTaxonRecord | null
   isLoading: boolean
   // eslint-disable-next-line no-unused-vars
   onFlip?: (e: React.MouseEvent) => void
-  onZoom?: () => void
+  // onZoom?: () => void
   _wilderNestData?: WilderKindCardType | null
 }) {
   // const theme = useMantineTheme()
@@ -285,7 +285,8 @@ function WildCard_Back({
                       c="white"
                       style={{ textShadow: "0px 0px 3px #000" }}
                     >
-                      <Interweave content={iNatdata.wikipedia_summary} />
+                      {/*<Interweave content={iNatdata.wikipedia_summary} />*/}
+                      {DOMPurify.sanitize(iNatdata.wikipedia_summary)}
                     </Text>
                   ) : (
                     <Stack align="center">

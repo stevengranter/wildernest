@@ -9,10 +9,10 @@ import useCollectionActions from "~/features/_shared/hooks/useCollectionActions.
 import { useCollections } from "~/features/_shared/hooks/useCollections.ts"
 import useLocalSyncedImmerState from "~/features/_shared/hooks/useLocalSyncedImmerState.ts"
 import { WildCard } from "~/features/card/components/WildCard/WildCard.tsx"
-import { Interweave } from "interweave"
 
 import "./CollectionView.css"
 import { useDndMonitor } from "@dnd-kit/core"
+import DOMPurify from "dompurify"
 
 export default function CollectionView({
   collectionId,
@@ -95,10 +95,11 @@ export default function CollectionView({
       {selectedCollection && (
         <>
           <Text m="xs">
-            <Interweave
-              transform={transformText}
-              content={selectedCollection.description}
-            />
+            {/*<Interweave*/}
+            {/*  transform={transformText}*/}
+            {/*  content={selectedCollection.description}*/}
+            {/*/>*/}
+            {DOMPurify.sanitize(String(selectedCollection.description))}
           </Text>
           {itemIdsArray.length === 0 && (
             <Text m="xs">
@@ -137,11 +138,11 @@ export default function CollectionView({
   )
 }
 
-function transformText(
-  node: HTMLElement,
-  children: React.ReactNode,
-): React.ReactNode {
-  if (node.tagName === "A") {
-    return <Link to={node.getAttribute("href") || ""}>{children}</Link>
-  }
-}
+// function transformText(
+//   node: HTMLElement,
+//   children: React.ReactNode,
+// ): React.ReactNode {
+//   if (node.tagName === "A") {
+//     return <Link to={node.getAttribute("href") || ""}>{children}</Link>
+//   }
+// }
