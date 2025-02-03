@@ -3,25 +3,16 @@ import { useCollections } from "~/features/_shared/hooks/useCollections.ts"
 import { useLogger } from "~/dev.ts"
 
 import Droppable from "~/features/card/components/DndKit/Droppable.tsx"
+import useCollectionActions from "~/features/_shared/hooks/useCollectionActions.tsx"
+import { useDndContext } from "@dnd-kit/core"
 
 export default function CollectionsDropContainer() {
   const [collections] = useCollections()
-  // const dndContext = useDndContext()
-  // console.log("CollectionsDropContainer", dndContext)
-  // useDndMonitor({
-  //   // onDragStart(event) {
-  //   //   console.log("CollectionView : onDragStart: id: ", event.active.id)
-  //   // },
-  //   // onDragMove(event) {},
-  //   // onDragOver(event) {},
-  //   onDragOver(event) {
-  //     console.log("CollectionsDropContainer : onDragOver ", event)
-  //   },
-  //   onDragEnd(event) {
-  //     console.log("CollectionsDropContainer : onDragEnd: id: ", event)
-  //   },
-  //   // onDragCancel(event) {},
-  // })
+  const collectionAction = useCollectionActions()
+  const { active } = useDndContext()
+
+  useLogger("Active", [active])
+
   useLogger("CollectionsList", [{ collections }])
   return (
     collections && (
@@ -36,7 +27,19 @@ export default function CollectionsDropContainer() {
           gap="md"
         >
           {collections.map((collection) => (
-            <Droppable id={collection.id}>
+            <Droppable
+              id={collection.id}
+              dropAction={() => {
+                if (active) {
+                  collectionAction.addIdToCollectionId(
+                    active.id,
+                    collection.id,
+                    active.data.current?.name,
+                    active.data.current?.commonName,
+                  )
+                }
+              }}
+            >
               <Title>{collection.name}</Title>
             </Droppable>
           ))}

@@ -92,6 +92,12 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
     transition: `scale 250ms, rotate 100ms`,
   }
 
+  const dragData = {
+    taxonId: iNatData.id,
+    name: iNatData.name,
+    commonName: iNatData.preferred_common_name,
+  }
+
   return (
     <>
       <Modal
@@ -122,7 +128,7 @@ export function WildCard({ taxonId, dataObject, restProps }: WildCardProps) {
         </ReactCardFlip>
       </Modal>
       {/*<div ref={setNodeRef} style={style} {...listeners} {...attributes}>*/}
-      <Draggable id={taxonId?.toString()} style={dragStyles}>
+      <Draggable id={taxonId?.toString()} style={dragStyles} data={dragData}>
         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
           <WildCard_Front
             iNatdata={iNatData}

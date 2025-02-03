@@ -8,6 +8,8 @@ import { useCallback, useEffect, useState } from "react"
 import useCollectionActions from "~/features/_shared/hooks/useCollectionActions.tsx"
 import { useLogger } from "~/dev.ts"
 import { useSearchParams } from "react-router-dom"
+import { ActionIcon, Button } from "@mantine/core"
+import Droppable from "~/features/card/components/DndKit/Droppable.tsx"
 
 export default function CollectionsView2() {
   const [collections] = useCollections()
@@ -69,6 +71,12 @@ export default function CollectionsView2() {
         collections={collections}
         handleSelect={handleSelect}
       />
+      {selectedCollection && (
+        <Droppable id={selectedCollection?.id}>
+          Remove from {selectedCollection.name}
+        </Droppable>
+      )}
+
       <CardGrid cards={cards} collectionId={collectionId} />
     </>
   )

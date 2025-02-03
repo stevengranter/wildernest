@@ -63,9 +63,19 @@ export default function DefaultLayout() {
 
   function handleDragEnd(event: DragEndEvent) {
     if (event.over) {
-      console.log("Over:", event.over.id)
-      console.log("Card ID:", event.active.id)
-      collectionAction.addIdToCollectionId(event.active.id, event.over.id)
+      console.log(event)
+      const activeObject = event.active
+      const overObject = event.over
+      let collectionId = overObject.id
+
+      const dropAction = event.over.data.current?.dropAction
+      if (event.over.data.current && dropAction) {
+        const idPrefix = event.over.data.current.dropAction.name
+        const regex = new RegExp(`^${idPrefix}-`)
+        collectionId = event.over.id.toString().replace(regex, "")
+        dropAction()
+      }
+      // collectionAction.addIdToCollectionId(event.active.id, collectionId)
     }
   }
 

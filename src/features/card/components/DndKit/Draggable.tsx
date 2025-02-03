@@ -1,18 +1,23 @@
 import { CSSProperties, ReactNode } from "react"
 import { useDraggable } from "@dnd-kit/core"
 
+import { type Data } from "@dnd-kit/core"
+
 export default function Draggable({
   id,
   style,
+  data,
   children,
 }: {
   id?: string
-  style?: CSSProperties
+  style: CSSProperties
+  data?: Data | undefined
   children: ReactNode
 }) {
   const componentId = id || crypto.randomUUID()
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: `${componentId}`,
+    data: data,
   })
 
   const userStyles = transform
